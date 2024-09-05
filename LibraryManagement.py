@@ -1,5 +1,5 @@
 import sqlite3
-from tkinter import *
+import tkinter as tk
 from tkinter import messagebox
 from datetime import datetime, timedelta
 
@@ -89,26 +89,26 @@ def check_overdue_penalties():
             cursor.execute("UPDATE borrow SET penalty = ? WHERE borrow_id = ?", (penalty, borrow[0]))
             conn.commit()
 
-root = Tk()
+root = tk.Tk()
 root.title("Library Management System")
 root.geometry("500x400")
 
 def login_screen():
     clear_screen()
 
-    Label(root, text="Login", font=("Arial", 20)).pack(pady=10)
+    tk.Label(root, text="Login", font=("Arial", 20)).pack(pady=10)
 
-    Label(root, text="Username:").pack()
-    username_entry = Entry(root)
+    tk.Label(root, text="Username:").pack()
+    username_entry = tk.Entry(root)
     username_entry.pack()
 
-    Label(root, text="Password:").pack()
-    password_entry = Entry(root, show="*")
+    tk.Label(root, text="Password:").pack()
+    password_entry = tk.Entry(root, show="*")
     password_entry.pack()
 
-    role_var = StringVar(value="member")
-    Radiobutton(root, text="Member", variable=role_var, value="member").pack()
-    Radiobutton(root, text="Admin", variable=role_var, value="admin").pack()
+    role_var = tk.StringVar(value="member")
+    tk.Radiobutton(root, text="Member", variable=role_var, value="member").pack()
+    tk.Radiobutton(root, text="Admin", variable=role_var, value="admin").pack()
 
     def login_action():
         username = username_entry.get()
@@ -124,7 +124,7 @@ def login_screen():
         else:
             messagebox.showwarning("Login Failed", "Invalid credentials")
 
-    Button(root, text="Login", command=login_action).pack(pady=10)
+    tk.Button(root, text="Login", command=login_action).pack(pady=10)
 
 def clear_screen():
     for widget in root.winfo_children():
@@ -133,48 +133,48 @@ def clear_screen():
 def admin_panel():
     clear_screen()
 
-    Label(root, text="Admin Panel", font=("Arial", 20)).pack(pady=10)
+    tk.Label(root, text="Admin Panel", font=("Arial", 20)).pack(pady=10)
 
-    Button(root, text="View All Books", command=show_books).pack(pady=5)
-    Button(root, text="Add Book", command=add_book_screen).pack(pady=5)
-    Button(root, text="Check Penalties", command=check_overdue_penalties_screen).pack(pady=5)
-    Button(root, text="Logout", command=login_screen).pack(pady=5)
+    tk.Button(root, text="View All Books", command=show_books).pack(pady=5)
+    tk.Button(root, text="Add Book", command=add_book_screen).pack(pady=5)
+    tk.Button(root, text="Check Penalties", command=check_overdue_penalties_screen).pack(pady=5)
+    tk.Button(root, text="Logout", command=login_screen).pack(pady=5)
 
 def member_panel(user_id):
     clear_screen()
 
-    Label(root, text="Member Panel", font=("Arial", 20)).pack(pady=10)
+    tk.Label(root, text="Member Panel", font=("Arial", 20)).pack(pady=10)
 
-    Button(root, text="View Borrowed Books", command=lambda: view_borrowed_books_screen(user_id)).pack(pady=5)
-    Button(root, text="Borrow Book", command=lambda: borrow_book_screen(user_id)).pack(pady=5)
-    Button(root, text="Logout", command=login_screen).pack(pady=5)
+    tk.Button(root, text="View Borrowed Books", command=lambda: view_borrowed_books_screen(user_id)).pack(pady=5)
+    tk.Button(root, text="Borrow Book", command=lambda: borrow_book_screen(user_id)).pack(pady=5)
+    tk.Button(root, text="Logout", command=login_screen).pack(pady=5)
 
 def show_books():
     clear_screen()
     
-    Label(root, text="All Books", font=("Arial", 20)).pack(pady=10)
+    tk.Label(root, text="All Books", font=("Arial", 20)).pack(pady=10)
     
     books = view_books()
     for book in books:
-        Label(root, text=f"ID: {book[0]}, Title: {book[1]}, Author: {book[2]}, Price: {book[3]}, Available: {book[4]}").pack()
+        tk.Label(root, text=f"ID: {book[0]}, Title: {book[1]}, Author: {book[2]}, Price: {book[3]}, Available: {book[4]}").pack()
     
-    Button(root, text="Back", command=admin_panel).pack(pady=10)
+    tk.Button(root, text="Back", command=admin_panel).pack(pady=10)
 
 def add_book_screen():
     clear_screen()
 
-    Label(root, text="Add Book", font=("Arial", 20)).pack(pady=10)
+    tk.Label(root, text="Add Book", font=("Arial", 20)).pack(pady=10)
 
-    Label(root, text="Title:").pack()
-    title_entry = Entry(root)
+    tk.Label(root, text="Title:").pack()
+    title_entry = tk.Entry(root)
     title_entry.pack()
 
-    Label(root, text="Author:").pack()
-    author_entry = Entry(root)
+    tk.Label(root, text="Author:").pack()
+    author_entry = tk.Entry(root)
     author_entry.pack()
 
-    Label(root, text="Price:").pack()
-    price_entry = Entry(root)
+    tk.Label(root, text="Price:").pack()
+    price_entry = tk.Entry(root)
     price_entry.pack()
 
     def add_book_action():
@@ -185,38 +185,38 @@ def add_book_screen():
         messagebox.showinfo("Success", "Book added successfully!")
         admin_panel()
 
-    Button(root, text="Add Book", command=add_book_action).pack(pady=10)
-    Button(root, text="Back", command=admin_panel).pack(pady=10)
+    tk.Button(root, text="Add Book", command=add_book_action).pack(pady=10)
+    tk.Button(root, text="Back", command=admin_panel).pack(pady=10)
 
 def borrow_book_screen(user_id):
     clear_screen()
 
-    Label(root, text="Borrow Book", font=("Arial", 20)).pack(pady=10)
+    tk.Label(root, text="Borrow Book", font=("Arial", 20)).pack(pady=10)
 
     books = view_books()
     for book in books:
-        Label(root, text=f"ID: {book[0]}, Title: {book[1]}, Author: {book[2]}, Price: {book[3]}, Available: {book[4]}").pack()
+        tk.Label(root, text=f"ID: {book[0]}, Title: {book[1]}, Author: {book[2]}, Price: {book[3]}, Available: {book[4]}").pack()
 
-    book_id_entry = Entry(root)
+    book_id_entry = tk.Entry(root)
     book_id_entry.pack()
 
     def borrow_action():
         book_id = int(book_id_entry.get())
         borrow_book(user_id, book_id)
 
-    Button(root, text="Borrow", command=borrow_action).pack(pady=10)
-    Button(root, text="Back", command=lambda: member_panel(user_id)).pack(pady=10)
+    tk.Button(root, text="Borrow", command=borrow_action).pack(pady=10)
+    tk.Button(root, text="Back", command=lambda: member_panel(user_id)).pack(pady=10)
 
 def view_borrowed_books_screen(user_id):
     clear_screen()
 
-    Label(root, text="Your Borrowed Books", font=("Arial", 20)).pack(pady=10)
+    tk.Label(root, text="Your Borrowed Books", font=("Arial", 20)).pack(pady=10)
 
     borrowed_books = view_member_borrowed_books(user_id)
     for book in borrowed_books:
-        Label(root, text=f"Book: {book[0]}, Borrowed on: {book[1]}, Return by: {book[2]}, Penalty: {book[3]}").pack()
+        tk.Label(root, text=f"Book: {book[0]}, Borrowed on: {book[1]}, Return by: {book[2]}, Penalty: {book[3]}").pack()
 
-    Button(root, text="Back", command=lambda: member_panel(user_id)).pack(pady=10)
+    tk.Button(root, text="Back", command=lambda: member_panel(user_id)).pack(pady=10)
 
 def check_overdue_penalties_screen():
     check_overdue_penalties()
